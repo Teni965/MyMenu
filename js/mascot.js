@@ -54,8 +54,86 @@
 
   const button = widget.querySelector('button');
   const bubble = widget.querySelector('.momo-bubble');
+  const phrases = {
+    home: [
+      'Добро пожаловать! С чего начнём кулинарное путешествие?',
+      'Ищи рецепт по названию или выбери кухню мира.',
+      'Здесь найдутся идеи и для будней, и для праздника!',
+      'Хочешь чего-то нового? Попробуй рандомайзер.',
+      'Сохраняй любимые блюда сердечком, чтобы не потерять.',
+      'Может, сегодня приготовим что-нибудь уютное?',
+      'Любопытно, какие вкусы ты откроешь сегодня!',
+      'Выбирай рецепт — я буду рядом и подбодрю.',
+      'Прокатимся по кухням мира, не выходя из дома?',
+      'Порадуй себя вкусным блюдом!'
+    ],
+    recipes: [
+      'Подберём блюдо по настроению или ингредиентам?',
+      'Нажми «Открыть рецепт», чтобы увидеть все шаги.',
+      'Нашёл интересное? Добавь его в любимые!',
+      'В каталоге есть супы, десерты и многое другое.',
+      'Введи название в поиск — помогу найти.',
+      'Какой рецепт хочется попробовать первым?',
+      'Не забудь проверить ингредиенты перед готовкой.',
+      'Каждое блюдо начинается с хорошей идеи!',
+      'Могу помочь выбрать — загляни в рандомайзер.',
+      'Пусть новый рецепт станет твоим любимым!'
+    ],
+    favorites: [
+      'Здесь собраны рецепты, которые тебе понравились.',
+      'Список пуст? Добавь сердечком что-нибудь вкусное.',
+      'Из любимого блюда всегда можно приготовить ужин.',
+      'Какой рецепт из коллекции приготовим сегодня?',
+      'Любимые блюда всегда под рукой!',
+      'Можно убрать рецепт из списка одним нажатием.',
+      'Добавляй новые вкусы в свою коллекцию.',
+      'Твоя подборка становится всё аппетитнее!',
+      'Выбери рецепт и загляни за деталями.',
+      'Вдохновение уже сохранено здесь!'
+    ],
+    cuisines: [
+      'Куда отправимся за вкусами сегодня?',
+      'Открой кухню и выбери блюдо этой страны.',
+      'У каждой кухни есть своя вкусная история.',
+      'Сегодня можно устроить маленькое гастропутешествие!',
+      'Есть знакомые блюда и новые открытия.',
+      'Выбирай страну — а я поддержу!',
+      'Как насчёт ароматов Азии или Средиземноморья?',
+      'Попробуй рецепт, который ещё не готовил.',
+      'Путешествовать можно и через домашнюю кухню.',
+      'Какой уголок мира окажется на тарелке?'
+    ],
+    games: [
+      'Какое блюдо из игрового мира попробуем воплотить?',
+      'Выбери рецепт из Genshin Impact или Honkai: Star Rail.',
+      'Не забудь раскрыть рецепт — ингредиенты и шаги вместе.',
+      'Сохрани любимое игровое блюдо сердечком!',
+      'Из игры прямо на твою кухню!',
+      'Сегодня готовим что-нибудь из Тейвата или Белобога?',
+      'В каждом игровом рецепте есть вкусное приключение.',
+      'Найди блюдо по названию или выбери свою игру.',
+      'Какое игровое блюдо удивит тебя сегодня?',
+      'Пора превратить пиксельное вдохновение в настоящий ужин!'
+    ],
+    randomizer: [
+      'Нажми кнопку — выберем блюдо наугад!',
+      'Не понравился вариант? Давай попробуем ещё.',
+      'Следующее блюдо может быть из игрового мира!',
+      'Доверимся случаю и приготовим что-то новое?',
+      'Нажми на карточку выпавшего блюда, чтобы открыть рецепт.',
+      'Пусть случай подскажет вкусный план на ужин!',
+      'В рандомайзере есть обычные и игровые рецепты.',
+      'Каждое нажатие — новая идея для готовки.',
+      'Интересно, что выпадет в следующий раз?',
+      'Готов к ещё одному вкусному сюрпризу?'
+    ]
+  };
+  const phraseIndexes = Object.fromEntries(
+    Object.keys(phrases).map(context => [context, 0])
+  );
   let resetTimer;
   let hideTimer;
+  let context = getPageContext();
 
   function say(state, message, duration = 3600) {
     widget.dataset.state = state;
@@ -71,6 +149,30 @@
     hideTimer = setTimeout(() => bubble.classList.remove('visible'), duration);
   }
 
+  function getPageContext() {
+    const path = location.pathname;
+    if (path.endsWith('/games.html')) return 'games';
+    if (path.endsWith('/randomizer.html')) return 'randomizer';
+    if (!path.endsWith('/index.html') && path !== '/') return 'home';
+
+    const section = document.elementFromPoint(
+      Math.round(window.innerWidth / 2),
+      Math.round(window.innerHeight * 0.4)
+    )?.closest('section');
+    if (section?.id === 'recipes') return 'favorites';
+    if (section?.id === 'recipeCatalog') return 'recipes';
+    if (section?.id === 'cuisines' || section?.classList.contains('cuisine')) return 'cuisines';
+    return 'home';
+  }
+
+  function syncContext() {
+    const nextContext = getPageContext();
+    if (nextContext !== context) {
+      context = nextContext;
+      phraseIndexes[context] = 0;
+    }
+  }
+
   function attach(target, state, message) {
     if (!target || target.querySelector('.momo-inline')) return;
     const inline = document.createElement('span');
@@ -82,14 +184,17 @@
   }
 
   button.addEventListener('click', () => {
-    const hint = location.pathname.endsWith('games.html')
-      ? 'Выбери блюдо из игры и сохрани любимое сердечком!'
-      : 'Найди рецепт и добавь его в любимые!';
-    say('curious', hint, 5000);
+    syncContext();
+    const contextPhrases = phrases[context];
+    const phraseIndex = phraseIndexes[context];
+    phraseIndexes[context] = (phraseIndex + 1) % contextPhrases.length;
+    say(context === 'randomizer' ? 'curious' : 'hint', contextPhrases[phraseIndex], 5000);
     widget.classList.remove('momo-tap');
     void widget.offsetWidth;
     widget.classList.add('momo-tap');
   });
+  window.addEventListener('scroll', syncContext, { passive: true });
+  window.addEventListener('hashchange', syncContext);
 
   window.momoMascot = {
     say,
@@ -99,5 +204,13 @@
     attach,
   };
 
-  say('hint', 'Привет! Нажми на меня, если нужна подсказка.', 5200);
+  const greetings = {
+    home: 'Привет! Давай найдём что-нибудь вкусное.',
+    recipes: 'Ты в каталоге рецептов. Ищем вдохновение?',
+    favorites: 'Заглянем в твою коллекцию любимых блюд?',
+    cuisines: 'Готов к путешествию по кухням мира?',
+    games: 'Привет! Заглянем за рецептами из игр?',
+    randomizer: 'Привет! Давай доверим выбор случаю?'
+  };
+  say('hint', greetings[context], 5200);
 })();
