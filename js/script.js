@@ -17,6 +17,7 @@ const pop={
 function renderPop(){
  const cards=$('#cards');
  cards.replaceChildren();
+ window.momoMascot?.attach($('#cardsEmpty'),'hint','Добавь рецепт в избранное — он появится здесь.');
  let shown=0;
  items.forEach(({el})=>{
   if(!pop.favs.has(el.id))return;
@@ -61,13 +62,15 @@ function updateFavoriteButtons(){
 }
 function toggleFavorite(card){
  const id=card.id||card.dataset.recipeId;
- if(!id)return;
+ if(!id)return false;
  const name=card.querySelector('h2').textContent;
  const added=!pop.favs.has(id);
  added?pop.favs.add(id):pop.favs.delete(id);
  store.set('momo-favs',[...pop.favs]);
  renderPop();
  toast(added?`«${name}» добавлено в любимые блюда`:`«${name}» удалено из любимых блюд`);
+ if(added)window.momoMascot?.celebrate(`Ура! «${name}» теперь в любимых!`);
+ return pop.favs.has(id);
 }
 function renderCatalog(){
  const q=cat.q.trim().toLowerCase();
@@ -76,6 +79,10 @@ function renderCatalog(){
  items.forEach(i=>i.el.hidden=true);
  list.forEach((i,k)=>i.el.hidden=limited&&k>=12);
  $('#emptyMsg').hidden=list.length>0;
+ window.momoMascot?.attach($('#emptyMsg'),'sad');
+ if(list.length===0&&q){
+  window.momoMascot?.say('sad','Не нашёл такой рецепт. Попробуй другое название.',4200);
+ }
  const more=$('#showAllRecipes');
  more.hidden=!!cat.cat||!!q||list.length<=12;
  more.setAttribute('aria-expanded',cat.expanded);
@@ -92,8 +99,22 @@ function handleFavoriteClick(e){
  const button=e.target.closest('.favorite-toggle');
  if(button)toggleFavorite(button.closest('.rcard'));
 }
+function handleRecipeClick(e){
+ const summary=e.target.closest('.rdet summary');
+ if(!summary)return;
+ e.preventDefault();
+ const card=summary.closest('.rcard');
+ const id=card.id||card.dataset.recipeId;
+ window.recipeViewer.open(card,{
+  kicker:card.querySelector('.tag')?.textContent||'',
+  isFavorite:pop.favs.has(id),
+  onFavoriteToggle:()=>toggleFavorite(card)
+ });
+}
 $('#cards').addEventListener('click',handleFavoriteClick);
 $('#recipeList').addEventListener('click',handleFavoriteClick);
+$('#cards').addEventListener('click',handleRecipeClick);
+$('#recipeList').addEventListener('click',handleRecipeClick);
 $('#filters').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;cat.cat=b.dataset.cat||null;renderCatalog()});
 $('#showAllRecipes').addEventListener('click',()=>{cat.expanded=!cat.expanded;renderCatalog()});
 $('#searchForm').addEventListener('submit',e=>{e.preventDefault();$('#recipeCatalog').scrollIntoView()});
@@ -106,16 +127,22 @@ $('[data-nav="recipes"]').addEventListener('click',resetAll);
 $('[data-nav="home"]').addEventListener('click',()=>setNav('home'));
 
 // ---------- Окно рецепта: ингредиенты и шаги берём из карточки каталога ----------
-const modal=$('#modal');
-const recipeLists=id=>{const r=$('#recipe-'+id);return{ing:r.querySelector('.ring').innerHTML,steps:r.querySelector('.rsteps').innerHTML}};
 function openDish(btn){
- const block=btn.closest('.cuisine'),card=btn.closest('.dcard'),{ing,steps}=recipeLists(btn.dataset.recipe),st=block.style;
- const [time,serv]=[...card.querySelectorAll('.dmeta>span')].map(s=>s.textContent);
- $('#modalBody').innerHTML=`<div class="mhead" style="background:linear-gradient(135deg,${st.getPropertyValue('--t')},${st.getPropertyValue('--b')})"><span class="dflag">${card.querySelector('.dflag').textContent}</span><div><p class="kicker">${esc(block.querySelector('.chead h2').textContent)}</p><h2>${esc(card.querySelector('h3').textContent)}</h2><p class="cdesc">${esc(card.querySelector('.dbody>p').textContent)}</p><p class="mmeta">${esc(time)} · ${esc(serv)}</p></div></div><div class="mb"><section><h4>Ингредиенты</h4><ul>${ing}</ul></section><section><h4>Как приготовить</h4><ol>${steps}</ol></section></div>`;
- modal.showModal();
+ const block=btn.closest('.cuisine'),card=btn.closest('.dcard');
+ const source=$(`#recipe-${btn.dataset.recipe}`);
+ const image=card.querySelector('.dimg').style.backgroundImage.match(/^url\(["']?(.*?)["']?\)$/)?.[1]||'';
+ const metadata=[...card.querySelectorAll('.dmeta>span')].map(span=>span.textContent).join(' · ');
+ window.recipeViewer.open(source,{
+  source,
+  title:card.querySelector('h3').textContent,
+  description:card.querySelector('.dbody>p').textContent,
+  image,
+  metadata,
+  kicker:block.querySelector('.chead h2').textContent,
+  isFavorite:pop.favs.has(source.id),
+  onFavoriteToggle:()=>toggleFavorite(source)
+ });
 }
-$('#close').addEventListener('click',()=>modal.close());
-modal.addEventListener('click',e=>{if(e.target===modal)modal.close()});
 
 // ---------- Кухни мира ----------
 function showCuisine(key){

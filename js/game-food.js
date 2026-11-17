@@ -297,7 +297,7 @@ function makeRecipeDetails(recipe) {
   const details = document.createElement('details');
   details.className = 'rdet';
   const summary = document.createElement('summary');
-  summary.textContent = 'Рецепт';
+  summary.textContent = 'Открыть рецепт';
   const ingredientsTitle = document.createElement('h3');
   ingredientsTitle.className = 'rdet-section-title';
   ingredientsTitle.textContent = 'Ингредиенты';
@@ -375,6 +375,7 @@ function updateFavoriteButton(card) {
 
 function renderFavorites() {
   favoriteList.replaceChildren();
+  window.momoMascot?.attach(favoritesEmpty, 'hint', 'Добавь любимое игровое блюдо сердечком.');
   recipes.forEach((recipe, index) => {
     if (favoriteIds.has(`game-${index + 1}`)) {
       favoriteList.append(makeCard(recipe, index));
@@ -403,6 +404,8 @@ function toggleFavorite(button) {
   renderFavorites();
   list.querySelectorAll('.rcard').forEach(updateFavoriteButton);
   favoritesStatus.textContent = `Блюдо «${card.querySelector('h2').textContent}» ${wasFavorite ? 'удалено из' : 'добавлено в'} любимых.`;
+  if (!wasFavorite) window.momoMascot?.celebrate(`Ура! «${card.querySelector('h2').textContent}» теперь в любимых!`);
+  return favoriteIds.has(id);
 }
 
 recipes.forEach((recipe, index) => list.append(makeCard(recipe, index)));
@@ -412,6 +415,17 @@ for (const recipeList of [list, favoriteList]) {
   recipeList.addEventListener('click', event => {
     const button = event.target.closest('.favorite-toggle');
     if (button) toggleFavorite(button);
+  });
+  recipeList.addEventListener('click', event => {
+    const summary = event.target.closest('.rdet summary');
+    if (!summary) return;
+    event.preventDefault();
+    const card = summary.closest('.rcard');
+    window.recipeViewer.open(card, {
+      kicker: card.querySelector('.tag')?.textContent || '',
+      isFavorite: favoriteIds.has(card.dataset.recipeId),
+      onFavoriteToggle: () => toggleFavorite(card.querySelector('.favorite-toggle'))
+    });
   });
 }
 
@@ -425,6 +439,10 @@ function renderRecipes() {
     if (!card.hidden) visible += 1;
   }
   empty.hidden = visible > 0;
+  window.momoMascot?.attach(empty, 'sad');
+  if (visible === 0 && query) {
+    window.momoMascot?.say('sad', 'Не нашёл такое блюдо. Попробуй другой запрос.', 4200);
+  }
 }
 
 filters.addEventListener('click', event => {

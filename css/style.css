@@ -2416,3 +2416,453 @@ dialog img {
   font-size: 56px;
   background: linear-gradient(135deg, var(--t), var(--b));
 }
+
+.momo-mascot {
+  position: fixed;
+  z-index: 45;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  width: 100px;
+  text-align: center;
+  pointer-events: none;
+}
+.momo-mascot-button {
+  width: 92px;
+  height: 100px;
+  padding: 0;
+  pointer-events: auto;
+  filter: drop-shadow(0 5px 5px rgba(80, 40, 50, 0.14));
+}
+.momo-cat-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: momo-float 3.2s ease-in-out infinite;
+}
+.momo-tail {
+  transform-box: fill-box;
+  transform-origin: 12% 65%;
+  animation: momo-tail-wag 2.2s ease-in-out infinite;
+}
+.momo-ear {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+.momo-ear-left {
+  animation: momo-ear-twitch 4.8s ease-in-out infinite;
+}
+.momo-ear-right {
+  animation: momo-ear-twitch 4.8s ease-in-out 0.18s infinite;
+}
+.momo-eyes-open {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: momo-blink 5.4s infinite;
+}
+.momo-eyes-closed,
+.momo-mouth-o {
+  opacity: 0;
+}
+.momo-mouth {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.momo-sparkles {
+  animation: momo-sparkle 2.4s ease-in-out infinite;
+}
+.momo-bubble {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% - 8px);
+  width: max-content;
+  max-width: min(250px, calc(100vw - 36px));
+  padding: 10px 14px;
+  border: 1px solid rgba(130, 36, 58, 0.18);
+  border-radius: 15px 15px 3px 15px;
+  background: #fffaf3;
+  box-shadow: 0 5px 18px rgba(58, 42, 46, 0.13);
+  color: var(--ink);
+  font: 14px/1.35 var(--sans);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px) scale(0.96);
+  transform-origin: bottom right;
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+}
+.momo-bubble.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+.momo-mascot[data-state="happy"] .momo-eyes-open,
+.momo-mascot[data-state="curious"] .momo-mouth-smile,
+.momo-mascot[data-state="sad"] .momo-mouth-smile {
+  opacity: 0;
+  animation: none;
+}
+.momo-mascot[data-state="happy"] .momo-eyes-closed,
+.momo-mascot[data-state="curious"] .momo-mouth-o {
+  opacity: 1;
+}
+.momo-mascot[data-state="happy"] .momo-tail {
+  animation-duration: 0.48s;
+}
+.momo-mascot[data-state="happy"] .momo-cat-art {
+  animation: momo-happy-bounce 0.42s ease-in-out 4;
+}
+.momo-mascot[data-state="happy"] .momo-sparkles {
+  animation-duration: 0.6s;
+}
+.momo-mascot[data-state="curious"] .momo-body {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: momo-curious 0.7s ease-in-out 2;
+}
+.momo-mascot[data-state="sad"] .momo-eyes-open {
+  animation: none;
+  transform: scaleY(0.75);
+}
+.momo-mascot[data-state="sad"] .momo-mouth-smile {
+  opacity: 0;
+  animation: none;
+}
+.momo-mouth-sad {
+  opacity: 0;
+}
+.momo-mascot[data-state="sad"] .momo-mouth-sad {
+  opacity: 1;
+}
+.momo-mascot[data-state="sad"] .momo-sparkles {
+  opacity: 0.25;
+}
+.momo-mascot[data-state="hint"] .momo-flower {
+  animation: momo-flower-glow 1.2s ease-in-out infinite alternate;
+}
+.momo-tap .momo-cat-art {
+  animation: momo-tap 0.45s ease-out;
+}
+.momo-inline {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.momo-inline .momo-cat-art {
+  width: 64px;
+  height: 64px;
+}
+.favorite-empty .momo-inline {
+  display: block;
+  margin: 0 auto 10px;
+}
+.momo-inline-hint .momo-tail {
+  animation-duration: 0.9s;
+}
+.momo-inline-hint .momo-eyes-closed {
+  opacity: 1;
+}
+.momo-inline-hint .momo-eyes-open,
+.momo-inline-hint .momo-mouth-smile {
+  opacity: 0;
+  animation: none;
+}
+.momo-inline-sad .momo-eyes-open {
+  animation: none;
+  transform: scaleY(0.75);
+}
+.momo-inline-sad .momo-mouth-sad {
+  opacity: 1;
+}
+.empty-m .momo-inline {
+  display: block;
+  margin: 0 auto 8px;
+}
+@keyframes momo-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-7px) rotate(1deg); }
+}
+@keyframes momo-tail-wag {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(12deg); }
+}
+@keyframes momo-ear-twitch {
+  0%, 88%, 100% { transform: rotate(0); }
+  92% { transform: rotate(-9deg); }
+  96% { transform: rotate(5deg); }
+}
+@keyframes momo-blink {
+  0%, 94%, 98%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.08); }
+}
+@keyframes momo-sparkle {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes momo-happy-bounce {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  45% { transform: translateY(-13px) rotate(-5deg); }
+  75% { transform: translateY(-4px) rotate(5deg); }
+}
+@keyframes momo-curious {
+  0%, 100% { transform: rotate(0); }
+  35% { transform: rotate(-7deg); }
+  70% { transform: rotate(5deg); }
+}
+@keyframes momo-flower-glow {
+  from { filter: drop-shadow(0 0 0 rgba(214, 170, 115, 0)); }
+  to { filter: drop-shadow(0 0 5px rgba(214, 170, 115, 0.9)); }
+}
+@keyframes momo-tap {
+  0% { transform: scale(1); }
+  45% { transform: scale(0.9) rotate(-6deg); }
+  100% { transform: scale(1); }
+}
+@media (max-width: 640px) {
+  .momo-mascot {
+    right: max(6px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: 76px;
+  }
+  .momo-mascot-button {
+    width: 72px;
+    height: 78px;
+  }
+  .momo-bubble {
+    max-width: min(220px, calc(100vw - 24px));
+    font-size: 13px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .momo-mascot *,
+  .momo-mascot *::before,
+  .momo-inline * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.recipe-viewer {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(1140px, calc(100vw - 32px));
+  max-width: none;
+  max-height: min(92vh, 900px);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid rgba(115, 91, 82, 0.18);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 2% 100%, rgba(226, 205, 190, 0.32), transparent 22%),
+    radial-gradient(ellipse at 100% 80%, rgba(226, 205, 190, 0.28), transparent 25%),
+    #fbf3e9;
+  color: var(--ink);
+  box-shadow: 0 24px 80px rgba(44, 28, 28, 0.24);
+}
+.recipe-viewer[open] {
+  display: block;
+}
+.recipe-viewer::backdrop {
+  background: rgba(37, 27, 32, 0.58);
+  backdrop-filter: blur(3px);
+}
+.recipe-viewer-close {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(130, 36, 58, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 250, 243, 0.95);
+  color: var(--wine);
+  font-size: 26px;
+  line-height: 1;
+}
+.recipe-viewer-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.96fr);
+  gap: clamp(24px, 4vw, 48px);
+  min-height: 620px;
+  padding: clamp(24px, 4vw, 40px);
+}
+.recipe-viewer-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding-top: 20px;
+}
+.recipe-viewer-image {
+  width: 100%;
+  height: clamp(300px, 43vw, 470px);
+  object-fit: cover;
+  border-radius: 22px;
+  background: #eee2d5;
+  box-shadow: 0 12px 30px rgba(64, 42, 44, 0.13);
+}
+.recipe-viewer-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 230px;
+  padding: 12px 24px;
+  border: 1px solid rgba(100, 79, 74, 0.42);
+  border-radius: 30px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 17px;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.recipe-viewer-save:hover {
+  transform: translateY(-2px);
+  background: rgba(130, 36, 58, 0.07);
+}
+.recipe-viewer-save[aria-pressed="true"] {
+  border-color: var(--wine);
+  background: var(--wine);
+  color: #fff;
+}
+.recipe-viewer-save span:first-child {
+  font-size: 25px;
+  line-height: 1;
+}
+.recipe-viewer-content {
+  padding: 14px 0 4px;
+}
+.recipe-viewer-kicker {
+  margin-bottom: 5px;
+}
+.recipe-viewer-content > h2 {
+  margin: 0 34px 12px 0;
+  color: var(--h1);
+  font: 600 clamp(34px, 4vw, 52px)/0.98 var(--serif);
+}
+.recipe-viewer-meta {
+  margin-bottom: 18px;
+  padding: 8px 0 11px;
+  border-bottom: 1px solid rgba(115, 91, 82, 0.22);
+  color: var(--ink);
+  font-size: 15px;
+}
+.recipe-viewer-description {
+  margin: 0 0 20px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+.recipe-viewer-content section + section {
+  margin-top: 20px;
+}
+.recipe-viewer-content h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: var(--h1);
+  font: 600 24px/1.1 var(--serif);
+}
+.recipe-viewer-content h3 span {
+  width: 26px;
+  flex: 0 0 26px;
+  color: var(--wine);
+}
+.recipe-viewer-content h3 span svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+.recipe-viewer-content ul,
+.recipe-viewer-content ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.recipe-viewer-content li {
+  position: relative;
+  min-height: 27px;
+  padding-left: 30px;
+  font-size: 16px;
+  line-height: 1.45;
+}
+.recipe-viewer-content ul li::before {
+  content: "•";
+  position: absolute;
+  left: 10px;
+  color: var(--wine);
+  font-size: 19px;
+  line-height: 1.1;
+}
+.recipe-viewer-content ol {
+  counter-reset: recipe-step;
+}
+.recipe-viewer-content ol li {
+  counter-increment: recipe-step;
+}
+.recipe-viewer-content ol li::before {
+  content: counter(recipe-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 23px;
+  height: 23px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #efe0d5;
+  color: var(--h1);
+  font-size: 14px;
+  line-height: 1;
+}
+@media (max-width: 760px) {
+  .recipe-viewer {
+    width: calc(100vw - 18px);
+    max-height: 94vh;
+    border-radius: 18px;
+  }
+  .recipe-viewer-layout {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 16px 18px 24px;
+  }
+  .recipe-viewer-visual {
+    gap: 14px;
+    padding-top: 34px;
+  }
+  .recipe-viewer-image {
+    height: min(58vw, 340px);
+    min-height: 210px;
+    border-radius: 16px;
+  }
+  .recipe-viewer-save {
+    min-width: 200px;
+    padding: 9px 18px;
+    font-size: 15px;
+  }
+  .recipe-viewer-content {
+    padding: 0;
+  }
+  .recipe-viewer-content > h2 {
+    font-size: 38px;
+  }
+  .recipe-viewer-description {
+    font-size: 15px;
+  }
+  .recipe-viewer-content h3 {
+    font-size: 22px;
+  }
+  .recipe-viewer-content li {
+    font-size: 14px;
+  }
+}
