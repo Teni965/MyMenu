@@ -265,9 +265,21 @@ const recipes = [
 ];
 
 const list = document.querySelector('#gameRecipeList');
+const favoriteList = document.querySelector('#gameFavoriteList');
 const search = document.querySelector('#search');
 const empty = document.querySelector('#gameEmpty');
+const favoritesEmpty = document.querySelector('#gameFavoritesEmpty');
+const favoritesStatus = document.querySelector('#gameFavoriteStatus');
 const filters = document.querySelector('#gameFilters');
+const FAVORITES_KEY = 'momo-game-favs';
+let savedFavorites = [];
+try {
+  const parsedFavorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+  if (Array.isArray(parsedFavorites)) savedFavorites = parsedFavorites;
+} catch (error) {
+  console.error('Не удалось загрузить любимые игровые блюда.', error);
+}
+const favoriteIds = new Set(savedFavorites.filter(id => /^game-\d+$/.test(id)));
 let activeGame = 'all';
 
 function makeList(className, items) {
@@ -281,15 +293,24 @@ function makeList(className, items) {
   return listElement;
 }
 
-function makeDetails(title, items, className) {
+function makeRecipeDetails(recipe) {
   const details = document.createElement('details');
   details.className = 'rdet';
   const summary = document.createElement('summary');
-  summary.append(document.createTextNode(title));
-  const count = document.createElement('b');
-  count.textContent = `(${items.length})`;
-  summary.append(count);
-  details.append(summary, makeList(className, items));
+  summary.textContent = 'Рецепт';
+  const ingredientsTitle = document.createElement('h3');
+  ingredientsTitle.className = 'rdet-section-title';
+  ingredientsTitle.textContent = 'Ингредиенты';
+  const stepsTitle = document.createElement('h3');
+  stepsTitle.className = 'rdet-section-title';
+  stepsTitle.textContent = 'Приготовление';
+  details.append(
+    summary,
+    ingredientsTitle,
+    makeList('ring', recipe.ingredients),
+    stepsTitle,
+    makeList('rsteps', recipe.steps)
+  );
   return details;
 }
 
@@ -297,6 +318,7 @@ function makeCard(recipe, index) {
   const card = document.createElement('article');
   card.className = 'rcard';
   card.dataset.game = recipe.game;
+  card.dataset.recipeId = `game-${index + 1}`;
 
   const imageWrap = document.createElement('div');
   imageWrap.className = 'rimg';
@@ -307,7 +329,15 @@ function makeCard(recipe, index) {
   const tag = document.createElement('span');
   tag.className = 'tag';
   tag.textContent = recipe.gameName;
-  imageWrap.append(image, tag);
+  const favoriteButton = document.createElement('button');
+  favoriteButton.className = 'favorite-toggle';
+  favoriteButton.type = 'button';
+  favoriteButton.setAttribute('aria-pressed', 'false');
+  const favoriteIcon = document.createElement('span');
+  favoriteIcon.setAttribute('aria-hidden', 'true');
+  const favoriteLabel = document.createElement('span');
+  favoriteButton.append(favoriteIcon, favoriteLabel);
+  imageWrap.append(image, tag, favoriteButton);
 
   const body = document.createElement('div');
   body.className = 'rbody';
@@ -323,14 +353,67 @@ function makeCard(recipe, index) {
     title,
     description,
     meta,
-    makeDetails('Ингредиенты', recipe.ingredients, 'ring'),
-    makeDetails('Приготовление', recipe.steps, 'rsteps')
+    makeRecipeDetails(recipe)
   );
   card.append(imageWrap, body);
+  updateFavoriteButton(card);
   return card;
 }
 
+function updateFavoriteButton(card) {
+  const button = card.querySelector('.favorite-toggle');
+  const favorite = favoriteIds.has(card.dataset.recipeId);
+  const name = card.querySelector('h2').textContent;
+  button.setAttribute('aria-pressed', String(favorite));
+  button.setAttribute(
+    'aria-label',
+    `${favorite ? 'Убрать из любимых блюд: ' : 'Добавить в любимые блюда: '}${name}`
+  );
+  button.firstElementChild.textContent = favorite ? '♥' : '♡';
+  button.lastElementChild.textContent = favorite ? 'Убрать из любимых' : 'В любимые';
+}
+
+function renderFavorites() {
+  favoriteList.replaceChildren();
+  recipes.forEach((recipe, index) => {
+    if (favoriteIds.has(`game-${index + 1}`)) {
+      favoriteList.append(makeCard(recipe, index));
+    }
+  });
+  favoritesEmpty.hidden = favoriteList.childElementCount > 0;
+  list.querySelectorAll('.rcard').forEach(updateFavoriteButton);
+}
+
+function toggleFavorite(button) {
+  const card = button.closest('.rcard');
+  const id = card.dataset.recipeId;
+  const wasFavorite = favoriteIds.has(id);
+  if (wasFavorite) favoriteIds.delete(id);
+  else favoriteIds.add(id);
+  try {
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favoriteIds]));
+  } catch (error) {
+    if (wasFavorite) favoriteIds.add(id);
+    else favoriteIds.delete(id);
+    favoritesStatus.textContent = 'Не удалось сохранить избранное. Проверь настройки хранилища браузера.';
+    console.error('Не удалось сохранить любимые игровые блюда.', error);
+    renderFavorites();
+    return;
+  }
+  renderFavorites();
+  list.querySelectorAll('.rcard').forEach(updateFavoriteButton);
+  favoritesStatus.textContent = `Блюдо «${card.querySelector('h2').textContent}» ${wasFavorite ? 'удалено из' : 'добавлено в'} любимых.`;
+}
+
 recipes.forEach((recipe, index) => list.append(makeCard(recipe, index)));
+renderFavorites();
+
+for (const recipeList of [list, favoriteList]) {
+  recipeList.addEventListener('click', event => {
+    const button = event.target.closest('.favorite-toggle');
+    if (button) toggleFavorite(button);
+  });
+}
 
 function renderRecipes() {
   const query = search.value.trim().toLocaleLowerCase('ru');

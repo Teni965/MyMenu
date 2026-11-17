@@ -17,7 +17,7 @@
   <nav class="nav" id="nav">
     <a href="index.html#top">Главная</a>
     <a href="index.html#recipeCatalog">Рецепты</a>
-    <a href="index.html#recipes">Избранное</a>
+    <a href="#gameFavorites">Избранное</a>
     <a href="index.html#cuisines">Кухни мира</a>
     <a href="games.html" class="active" aria-current="page">Еда из игр</a>
   </nav>
@@ -37,10 +37,22 @@
   <img class="hero-img" src="assets/images/hero.webp" alt="Вдохновение для приготовления новых блюд">
 </section>
 
+<section class="sec pop-sec" id="gameFavorites">
+  <p class="kicker">Твоя игровая коллекция</p>
+  <h2>Любимые блюда из игр</h2>
+  <a href="#gameRecipes" class="more">Выбрать блюдо</a>
+  <div class="recipe-grid favorite-grid" id="gameFavoriteList" aria-live="polite"></div>
+  <p id="gameFavoriteStatus" class="game-empty" role="status" aria-live="polite"></p>
+  <div class="empty favorite-empty" id="gameFavoritesEmpty">
+    <p>Пока здесь нет любимых игровых блюд. Добавь рецепт в избранное — он появится здесь.</p>
+    <a class="favorite-empty-link" href="#gameRecipes">Выбрать блюдо</a>
+  </div>
+</section>
+
 <section class="sec all-sec" id="gameRecipes">
   <p class="kicker">Каталог</p>
   <h1>Рецепты из игровых миров</h1>
-  <p class="lead-sub">Выбери игру или найди блюдо по названию. Нажми на ингредиенты или приготовление, чтобы открыть подробности.</p>
+  <p class="lead-sub">Выбери игру или найди блюдо по названию. Нажми «Рецепт», чтобы открыть ингредиенты и приготовление.</p>
   <div class="qnav" id="gameFilters" aria-label="Фильтр по игре">
     <button class="qchip" type="button" data-game-filter="all" aria-pressed="true">Все блюда</button>
     <button class="qchip" type="button" data-game-filter="genshin" aria-pressed="false">Genshin Impact</button>

@@ -111,10 +111,8 @@ const recipeLists=id=>{const r=$('#recipe-'+id);return{ing:r.querySelector('.rin
 function openDish(btn){
  const block=btn.closest('.cuisine'),card=btn.closest('.dcard'),{ing,steps}=recipeLists(btn.dataset.recipe),st=block.style;
  const [time,serv]=[...card.querySelectorAll('.dmeta>span')].map(s=>s.textContent);
- $('#modalBody').innerHTML=`<div class="mhead" style="background:linear-gradient(135deg,${st.getPropertyValue('--t')},${st.getPropertyValue('--b')})"><span class="dflag">${card.querySelector('.dflag').textContent}</span><div><p class="kicker">${esc(block.querySelector('.chead h2').textContent)}</p><h2>${esc(card.querySelector('h3').textContent)}</h2><p class="cdesc">${esc(card.querySelector('.dbody>p').textContent)}</p><p class="mmeta">${esc(time)} · ${esc(serv)}</p></div></div><div class="mb"><section id="recipeIngredients"><h4>Ингредиенты</h4><ul>${ing}</ul><button class="cook-btn" type="button" id="cookRecipe">Приготовить</button></section><section id="recipeSteps" hidden><h4>Как приготовить</h4><ol>${steps}</ol><button class="cook-btn cook-back" type="button" id="backIngredients">К ингредиентам</button></section></div>`;
+ $('#modalBody').innerHTML=`<div class="mhead" style="background:linear-gradient(135deg,${st.getPropertyValue('--t')},${st.getPropertyValue('--b')})"><span class="dflag">${card.querySelector('.dflag').textContent}</span><div><p class="kicker">${esc(block.querySelector('.chead h2').textContent)}</p><h2>${esc(card.querySelector('h3').textContent)}</h2><p class="cdesc">${esc(card.querySelector('.dbody>p').textContent)}</p><p class="mmeta">${esc(time)} · ${esc(serv)}</p></div></div><div class="mb"><section><h4>Ингредиенты</h4><ul>${ing}</ul></section><section><h4>Как приготовить</h4><ol>${steps}</ol></section></div>`;
  modal.showModal();
- $('#cookRecipe').addEventListener('click',()=>{$('#recipeIngredients').hidden=true;$('#recipeSteps').hidden=false;$('#recipeSteps').scrollIntoView({block:'start'})});
- $('#backIngredients').addEventListener('click',()=>{$('#recipeSteps').hidden=true;$('#recipeIngredients').hidden=false});
 }
 $('#close').addEventListener('click',()=>modal.close());
 modal.addEventListener('click',e=>{if(e.target===modal)modal.close()});
