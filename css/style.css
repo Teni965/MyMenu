@@ -2543,7 +2543,7 @@ dialog img {
   }
 }
 
-.momo-mascot {
+.umami-mascot {
   position: fixed;
   z-index: 45;
   right: max(14px, env(safe-area-inset-right));
@@ -2552,52 +2552,52 @@ dialog img {
   text-align: center;
   pointer-events: none;
 }
-.momo-mascot-button {
+.umami-mascot-button {
   width: 92px;
   height: 100px;
   padding: 0;
   pointer-events: auto;
   filter: drop-shadow(0 5px 5px rgba(80, 40, 50, 0.14));
 }
-.momo-cat-art {
+.umami-cat-art {
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
-  animation: momo-float 3.2s ease-in-out infinite;
+  animation: umami-float 3.2s ease-in-out infinite;
 }
-.momo-tail {
+.umami-tail {
   transform-box: fill-box;
   transform-origin: 12% 65%;
-  animation: momo-tail-wag 2.2s ease-in-out infinite;
+  animation: umami-tail-wag 2.2s ease-in-out infinite;
 }
-.momo-ear {
+.umami-ear {
   transform-box: fill-box;
   transform-origin: center bottom;
 }
-.momo-ear-left {
-  animation: momo-ear-twitch 4.8s ease-in-out infinite;
+.umami-ear-left {
+  animation: umami-ear-twitch 4.8s ease-in-out infinite;
 }
-.momo-ear-right {
-  animation: momo-ear-twitch 4.8s ease-in-out 0.18s infinite;
+.umami-ear-right {
+  animation: umami-ear-twitch 4.8s ease-in-out 0.18s infinite;
 }
-.momo-eyes-open {
+.umami-eyes-open {
   transform-box: fill-box;
   transform-origin: center;
-  animation: momo-blink 5.4s infinite;
+  animation: umami-blink 5.4s infinite;
 }
-.momo-eyes-closed,
-.momo-mouth-o {
+.umami-eyes-closed,
+.umami-mouth-o {
   opacity: 0;
 }
-.momo-mouth {
+.umami-mouth {
   transform-box: fill-box;
   transform-origin: center;
 }
-.momo-sparkles {
-  animation: momo-sparkle 2.4s ease-in-out infinite;
+.umami-sparkles {
+  animation: umami-sparkle 2.4s ease-in-out infinite;
 }
-.momo-bubble {
+.umami-bubble {
   position: absolute;
   right: 0;
   bottom: calc(100% - 8px);
@@ -2617,154 +2617,154 @@ dialog img {
   transform-origin: bottom right;
   transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
 }
-.momo-bubble.visible {
+.umami-bubble.visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0) scale(1);
 }
-.momo-mascot[data-state="happy"] .momo-eyes-open,
-.momo-mascot[data-state="curious"] .momo-mouth-smile,
-.momo-mascot[data-state="sad"] .momo-mouth-smile {
+.umami-mascot[data-state="happy"] .umami-eyes-open,
+.umami-mascot[data-state="curious"] .umami-mouth-smile,
+.umami-mascot[data-state="sad"] .umami-mouth-smile {
   opacity: 0;
   animation: none;
 }
-.momo-mascot[data-state="happy"] .momo-eyes-closed,
-.momo-mascot[data-state="curious"] .momo-mouth-o {
+.umami-mascot[data-state="happy"] .umami-eyes-closed,
+.umami-mascot[data-state="curious"] .umami-mouth-o {
   opacity: 1;
 }
-.momo-mascot[data-state="happy"] .momo-tail {
+.umami-mascot[data-state="happy"] .umami-tail {
   animation-duration: 0.48s;
 }
-.momo-mascot[data-state="happy"] .momo-cat-art {
-  animation: momo-happy-bounce 0.42s ease-in-out 4;
+.umami-mascot[data-state="happy"] .umami-cat-art {
+  animation: umami-happy-bounce 0.42s ease-in-out 4;
 }
-.momo-mascot[data-state="happy"] .momo-sparkles {
+.umami-mascot[data-state="happy"] .umami-sparkles {
   animation-duration: 0.6s;
 }
-.momo-mascot[data-state="curious"] .momo-body {
+.umami-mascot[data-state="curious"] .umami-body {
   transform-box: fill-box;
   transform-origin: center bottom;
-  animation: momo-curious 0.7s ease-in-out 2;
+  animation: umami-curious 0.7s ease-in-out 2;
 }
-.momo-mascot[data-state="sad"] .momo-eyes-open {
+.umami-mascot[data-state="sad"] .umami-eyes-open {
   animation: none;
   transform: scaleY(0.75);
 }
-.momo-mascot[data-state="sad"] .momo-mouth-smile {
+.umami-mascot[data-state="sad"] .umami-mouth-smile {
   opacity: 0;
   animation: none;
 }
-.momo-mouth-sad {
+.umami-mouth-sad {
   opacity: 0;
 }
-.momo-mascot[data-state="sad"] .momo-mouth-sad {
+.umami-mascot[data-state="sad"] .umami-mouth-sad {
   opacity: 1;
 }
-.momo-mascot[data-state="sad"] .momo-sparkles {
+.umami-mascot[data-state="sad"] .umami-sparkles {
   opacity: 0.25;
 }
-.momo-mascot[data-state="hint"] .momo-flower {
-  animation: momo-flower-glow 1.2s ease-in-out infinite alternate;
+.umami-mascot[data-state="hint"] .umami-flower {
+  animation: umami-flower-glow 1.2s ease-in-out infinite alternate;
 }
-.momo-tap .momo-cat-art {
-  animation: momo-tap 0.45s ease-out;
+.umami-tap .umami-cat-art {
+  animation: umami-tap 0.45s ease-out;
 }
-.momo-inline {
+.umami-inline {
   display: inline-block;
   width: 64px;
   height: 64px;
   vertical-align: middle;
   margin-right: 10px;
 }
-.momo-inline .momo-cat-art {
+.umami-inline .umami-cat-art {
   width: 64px;
   height: 64px;
 }
-.favorite-empty .momo-inline {
+.favorite-empty .umami-inline {
   display: block;
   margin: 0 auto 10px;
 }
-.momo-inline-hint .momo-tail {
+.umami-inline-hint .umami-tail {
   animation-duration: 0.9s;
 }
-.momo-inline-hint .momo-eyes-closed {
+.umami-inline-hint .umami-eyes-closed {
   opacity: 1;
 }
-.momo-inline-hint .momo-eyes-open,
-.momo-inline-hint .momo-mouth-smile {
+.umami-inline-hint .umami-eyes-open,
+.umami-inline-hint .umami-mouth-smile {
   opacity: 0;
   animation: none;
 }
-.momo-inline-sad .momo-eyes-open {
+.umami-inline-sad .umami-eyes-open {
   animation: none;
   transform: scaleY(0.75);
 }
-.momo-inline-sad .momo-mouth-sad {
+.umami-inline-sad .umami-mouth-sad {
   opacity: 1;
 }
-.empty-m .momo-inline {
+.empty-m .umami-inline {
   display: block;
   margin: 0 auto 8px;
 }
-@keyframes momo-float {
+@keyframes umami-float {
   0%, 100% { transform: translateY(0) rotate(-1deg); }
   50% { transform: translateY(-7px) rotate(1deg); }
 }
-@keyframes momo-tail-wag {
+@keyframes umami-tail-wag {
   0%, 100% { transform: rotate(-8deg); }
   50% { transform: rotate(12deg); }
 }
-@keyframes momo-ear-twitch {
+@keyframes umami-ear-twitch {
   0%, 88%, 100% { transform: rotate(0); }
   92% { transform: rotate(-9deg); }
   96% { transform: rotate(5deg); }
 }
-@keyframes momo-blink {
+@keyframes umami-blink {
   0%, 94%, 98%, 100% { transform: scaleY(1); }
   96% { transform: scaleY(0.08); }
 }
-@keyframes momo-sparkle {
+@keyframes umami-sparkle {
   0%, 100% { opacity: 0.55; }
   50% { opacity: 1; }
 }
-@keyframes momo-happy-bounce {
+@keyframes umami-happy-bounce {
   0%, 100% { transform: translateY(0) rotate(0); }
   45% { transform: translateY(-13px) rotate(-5deg); }
   75% { transform: translateY(-4px) rotate(5deg); }
 }
-@keyframes momo-curious {
+@keyframes umami-curious {
   0%, 100% { transform: rotate(0); }
   35% { transform: rotate(-7deg); }
   70% { transform: rotate(5deg); }
 }
-@keyframes momo-flower-glow {
+@keyframes umami-flower-glow {
   from { filter: drop-shadow(0 0 0 rgba(214, 170, 115, 0)); }
   to { filter: drop-shadow(0 0 5px rgba(214, 170, 115, 0.9)); }
 }
-@keyframes momo-tap {
+@keyframes umami-tap {
   0% { transform: scale(1); }
   45% { transform: scale(0.9) rotate(-6deg); }
   100% { transform: scale(1); }
 }
 @media (max-width: 640px) {
-  .momo-mascot {
+  .umami-mascot {
     right: max(6px, env(safe-area-inset-right));
     bottom: max(8px, env(safe-area-inset-bottom));
     width: 76px;
   }
-  .momo-mascot-button {
+  .umami-mascot-button {
     width: 72px;
     height: 78px;
   }
-  .momo-bubble {
+  .umami-bubble {
     max-width: min(220px, calc(100vw - 24px));
     font-size: 13px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .momo-mascot *,
-  .momo-mascot *::before,
-  .momo-inline * {
+  .umami-mascot *,
+  .umami-mascot *::before,
+  .umami-inline * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;

@@ -3,21 +3,25 @@ const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const store={
- get(k,def){try{return JSON.parse(localStorage.getItem(k))??def}catch(e){return def}},
+ get(k,def){try{
+  const stored=localStorage.getItem(k);
+  const legacyKey=k.startsWith('umami-')?`momo-${k.slice('umami-'.length)}`:null;
+  return JSON.parse(stored??(legacyKey&&localStorage.getItem(legacyKey)))??def
+ }catch(e){return def}},
  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 };
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2400)}
 function setNav(k){$$('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===k&&!!a.closest('.nav')))}
 
 // ---------- Любимые рецепты и категории (данные лежат в index.html) ----------
-const savedFavorites=store.get('momo-favs',[]);
+const savedFavorites=store.get('umami-favs',[]);
 const pop={
  favs:new Set(Array.isArray(savedFavorites)?savedFavorites.map(id=>String(id).startsWith('recipe-')?String(id):`recipe-${id}`):[])
 };
 function renderPop(){
  const cards=$('#cards');
  cards.replaceChildren();
- window.momoMascot?.attach($('#cardsEmpty'),'hint','Добавь рецепт в избранное — он появится здесь.');
+ window.umamiMascot?.attach($('#cardsEmpty'),'hint','Добавь рецепт в избранное — он появится здесь.');
  let shown=0;
  items.forEach(({el})=>{
   if(!pop.favs.has(el.id))return;
@@ -66,10 +70,10 @@ function toggleFavorite(card){
  const name=card.querySelector('h2').textContent;
  const added=!pop.favs.has(id);
  added?pop.favs.add(id):pop.favs.delete(id);
- store.set('momo-favs',[...pop.favs]);
+ store.set('umami-favs',[...pop.favs]);
  renderPop();
  toast(added?`«${name}» добавлено в любимые блюда`:`«${name}» удалено из любимых блюд`);
- if(added)window.momoMascot?.celebrate(`Ура! «${name}» теперь в любимых!`);
+ if(added)window.umamiMascot?.celebrate(`Ура! «${name}» теперь в любимых!`);
  return pop.favs.has(id);
 }
 function renderCatalog(){
@@ -79,9 +83,9 @@ function renderCatalog(){
  items.forEach(i=>i.el.hidden=true);
  list.forEach((i,k)=>i.el.hidden=limited&&k>=12);
  $('#emptyMsg').hidden=list.length>0;
- window.momoMascot?.attach($('#emptyMsg'),'sad');
+ window.umamiMascot?.attach($('#emptyMsg'),'sad');
  if(list.length===0&&q){
-  window.momoMascot?.say('sad','Не нашёл такой рецепт. Попробуй другое название.',4200);
+  window.umamiMascot?.say('sad','Не нашёл такой рецепт. Попробуй другое название.',4200);
  }
  const more=$('#showAllRecipes');
  more.hidden=!!cat.cat||!!q||list.length<=12;
@@ -167,8 +171,8 @@ $('#subForm').addEventListener('submit',e=>{e.preventDefault();const v=$('#email
  else{m.textContent='Готово! Это демо: письмо на сервер не отправляется.';m.style.color='#b7e0b0';$('#email').value=''}});
 
 // ---------- Регистрация / вход (localStorage) ----------
-const AUTH={mode:'reg',user:store.get('momo-user',null)};
-const authUsers=()=>store.get('momo-users',[]);
+const AUTH={mode:'reg',user:store.get('umami-user',null)};
+const authUsers=()=>store.get('umami-users',[]);
 const USER_ICON='<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6.5 8-6.5s8 2.5 8 6.5"/></svg>';
 function setAuthUI(){
  const p=$('#profile');
@@ -204,13 +208,13 @@ $('#authForm').addEventListener('submit',e=>{e.preventDefault();
  if(AUTH.mode==='reg'){
   if(!name)return authMsg('Введите имя.',1);
   if(found)return authMsg('Пользователь с таким email уже зарегистрирован. Войдите.',1);
-  const u={name,email};users.push({...u,pass:btoa(pass)});store.set('momo-users',users);store.set('momo-user',u);AUTH.user=u;setAuthUI();$('#auth').close();toast('Добро пожаловать, '+name+'! Регистрация завершена');
+  const u={name,email};users.push({...u,pass:btoa(pass)});store.set('umami-users',users);store.set('umami-user',u);AUTH.user=u;setAuthUI();$('#auth').close();toast('Добро пожаловать, '+name+'! Регистрация завершена');
  }else{
   if(!found||found.pass!==btoa(pass))return authMsg('Неверный email или пароль.',1);
-  AUTH.user={name:found.name,email:found.email};store.set('momo-user',AUTH.user);setAuthUI();$('#auth').close();toast('С возвращением, '+found.name+'!');
+  AUTH.user={name:found.name,email:found.email};store.set('umami-user',AUTH.user);setAuthUI();$('#auth').close();toast('С возвращением, '+found.name+'!');
  }});
 $('#profile').addEventListener('click',()=>{
- if(AUTH.user){try{localStorage.removeItem('momo-user')}catch(e){}AUTH.user=null;setAuthUI();toast('Вы вышли из аккаунта')}
+ if(AUTH.user){try{localStorage.removeItem('umami-user')}catch(e){}AUTH.user=null;setAuthUI();toast('Вы вышли из аккаунта')}
  else openAuth('reg')});
 
 // ---------- Запуск ----------

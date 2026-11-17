@@ -27,7 +27,7 @@ function collectMainRecipes(markup) {
       id: card.id,
       title: card.querySelector('h2')?.textContent.trim() || '',
       description: card.querySelector('.rdesc')?.textContent.trim() || '',
-      category: card.querySelector('.tag')?.textContent.trim() || 'Рецепт Momo',
+      category: card.querySelector('.tag')?.textContent.trim() || 'Рецепт Umami',
       image: image?.getAttribute('src') || '',
       href: `index.html#${encodeURIComponent(card.id)}`
     }];

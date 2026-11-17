@@ -274,10 +274,12 @@ const empty = document.querySelector('#gameEmpty');
 const favoritesEmpty = document.querySelector('#gameFavoritesEmpty');
 const favoritesStatus = document.querySelector('#gameFavoriteStatus');
 const filters = document.querySelector('#gameFilters');
-const FAVORITES_KEY = 'momo-game-favs';
+const FAVORITES_KEY = 'umami-game-favs';
+const LEGACY_FAVORITES_KEY = 'momo-game-favs';
 let savedFavorites = [];
 try {
-  const parsedFavorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+  const storedFavorites = localStorage.getItem(FAVORITES_KEY) ?? localStorage.getItem(LEGACY_FAVORITES_KEY);
+  const parsedFavorites = JSON.parse(storedFavorites || '[]');
   if (Array.isArray(parsedFavorites)) savedFavorites = parsedFavorites;
 } catch (error) {
   console.error('Не удалось загрузить любимые игровые блюда.', error);
@@ -378,7 +380,7 @@ function updateFavoriteButton(card) {
 
 function renderFavorites() {
   favoriteList.replaceChildren();
-  window.momoMascot?.attach(favoritesEmpty, 'hint', 'Добавь любимое игровое блюдо сердечком.');
+  window.umamiMascot?.attach(favoritesEmpty, 'hint', 'Добавь любимое игровое блюдо сердечком.');
   recipes.forEach((recipe, index) => {
     if (favoriteIds.has(`game-${index + 1}`)) {
       favoriteList.append(makeCard(recipe, index));
@@ -407,7 +409,7 @@ function toggleFavorite(button) {
   renderFavorites();
   list.querySelectorAll('.rcard').forEach(updateFavoriteButton);
   favoritesStatus.textContent = `Блюдо «${card.querySelector('h2').textContent}» ${wasFavorite ? 'удалено из' : 'добавлено в'} любимых.`;
-  if (!wasFavorite) window.momoMascot?.celebrate(`Ура! «${card.querySelector('h2').textContent}» теперь в любимых!`);
+  if (!wasFavorite) window.umamiMascot?.celebrate(`Ура! «${card.querySelector('h2').textContent}» теперь в любимых!`);
   return favoriteIds.has(id);
 }
 
@@ -442,9 +444,9 @@ function renderRecipes() {
     if (!card.hidden) visible += 1;
   }
   empty.hidden = visible > 0;
-  window.momoMascot?.attach(empty, 'sad');
+  window.umamiMascot?.attach(empty, 'sad');
   if (visible === 0 && query) {
-    window.momoMascot?.say('sad', 'Не нашёл такое блюдо. Попробуй другой запрос.', 4200);
+    window.umamiMascot?.say('sad', 'Не нашёл такое блюдо. Попробуй другой запрос.', 4200);
   }
 }
 
