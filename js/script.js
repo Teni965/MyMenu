@@ -9,27 +9,66 @@ const store={
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2400)}
 function setNav(k){$$('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===k&&!!a.closest('.nav')))}
 
-// ---------- Популярные рецепты и категории (данные лежат в index.html) ----------
-const pop={cat:null,q:'',favOnly:false,favs:store.get('momo-favs',[])};
+// ---------- Любимые рецепты и категории (данные лежат в index.html) ----------
+const savedFavorites=store.get('momo-favs',[]);
+const pop={
+ favs:new Set(Array.isArray(savedFavorites)?savedFavorites.map(id=>String(id).startsWith('recipe-')?String(id):`recipe-${id}`):[])
+};
 function renderPop(){
- const q=pop.q.trim().toLowerCase();let shown=0;
- $$('#cards .card').forEach(card=>{
-  const name=card.querySelector('h3').textContent,fav=pop.favs.includes(+card.dataset.id);
-  const ok=(!pop.cat||card.dataset.cat===pop.cat)&&(!q||name.toLowerCase().includes(q))&&(!pop.favOnly||fav);
-  card.hidden=!ok;shown+=ok;
-  const b=card.querySelector('.fav');
-  b.setAttribute('aria-pressed',fav);
-  b.setAttribute('aria-label',(fav?'Убрать из избранного: ':'В избранное: ')+name);
+ const cards=$('#cards');
+ cards.replaceChildren();
+ let shown=0;
+ items.forEach(({el})=>{
+  if(!pop.favs.has(el.id))return;
+  const card=el.cloneNode(true);
+  card.removeAttribute('id');
+  card.dataset.recipeId=el.id;
+  card.hidden=false;
+  card.querySelectorAll('details').forEach(detail=>{detail.open=false});
+  cards.append(card);
+  shown+=1;
  });
- $$('.cat').forEach(b=>{const on=pop.cat===b.dataset.id;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
  $('#cardsEmpty').hidden=shown>0;
- $('#cardsEmptyText').textContent=pop.favOnly?'В избранном пока пусто. Нажмите на сердечко у рецепта.':'Ничего не найдено. Измените запрос или';
+ updateFavoriteButtons();
 }
 
 // ---------- Каталог «Все рецепты» ----------
 const cat={cat:null,q:'',expanded:false};
 const items=$$('#recipeList .rcard').map(el=>({el,cat:el.dataset.cat,
  text:['h2','.tag','.rdesc','.ring'].map(s=>el.querySelector(s)?.textContent||'').join(' ').toLowerCase()}));
+function makeFavoriteButton(card){
+ const button=document.createElement('button');
+ button.className='favorite-toggle';
+ button.type='button';
+ const icon=document.createElement('span');
+ icon.setAttribute('aria-hidden','true');
+ const label=document.createElement('span');
+ button.append(icon,label);
+ card.querySelector('.rimg').append(button);
+ return button;
+}
+items.forEach(({el})=>makeFavoriteButton(el));
+function updateFavoriteButtons(){
+ $$('#recipeList .rcard, #cards .rcard').forEach(card=>{
+  const button=card.querySelector('.favorite-toggle');
+  const favorite=pop.favs.has(card.id||card.dataset.recipeId);
+  const name=card.querySelector('h2').textContent;
+  button.setAttribute('aria-pressed',String(favorite));
+  button.setAttribute('aria-label',(favorite?'Убрать из любимых блюд: ':'Добавить в любимые блюда: ')+name);
+  button.firstElementChild.textContent=favorite?'♥':'♡';
+  button.lastElementChild.textContent=favorite?'Убрать из любимых':'В любимые';
+ });
+}
+function toggleFavorite(card){
+ const id=card.id||card.dataset.recipeId;
+ if(!id)return;
+ const name=card.querySelector('h2').textContent;
+ const added=!pop.favs.has(id);
+ added?pop.favs.add(id):pop.favs.delete(id);
+ store.set('momo-favs',[...pop.favs]);
+ renderPop();
+ toast(added?`«${name}» добавлено в любимые блюда`:`«${name}» удалено из любимых блюд`);
+}
 function renderCatalog(){
  const q=cat.q.trim().toLowerCase();
  const list=items.filter(i=>(!cat.cat||i.cat===cat.cat)&&(!q||i.text.includes(q)));
@@ -45,37 +84,30 @@ function renderCatalog(){
 }
 
 function resetAll(){
- Object.assign(pop,{cat:null,q:'',favOnly:false});Object.assign(cat,{cat:null,q:''});
+ Object.assign(cat,{cat:null,q:''});
  $('#search').value='';renderPop();renderCatalog();setNav('recipes');
 }
 
-$('#cards').addEventListener('click',e=>{
- const card=e.target.closest('.card');
- if(e.target.closest('.fav')){
-  const id=+card.dataset.id,i=pop.favs.indexOf(id);
-  i<0?pop.favs.push(id):pop.favs.splice(i,1);
-  store.set('momo-favs',pop.favs);renderPop();toast(i<0?'Добавлено в избранное':'Удалено из избранного');
- }else if(e.target.closest('.open'))openPopular(card);
- else if(e.target.id==='reset')resetAll()});
+function handleFavoriteClick(e){
+ const button=e.target.closest('.favorite-toggle');
+ if(button)toggleFavorite(button.closest('.rcard'));
+}
+$('#cards').addEventListener('click',handleFavoriteClick);
+$('#recipeList').addEventListener('click',handleFavoriteClick);
 $('#filters').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;cat.cat=b.dataset.cat||null;renderCatalog()});
 $('#showAllRecipes').addEventListener('click',()=>{cat.expanded=!cat.expanded;renderCatalog()});
 $('#searchForm').addEventListener('submit',e=>{e.preventDefault();$('#recipeCatalog').scrollIntoView()});
-$('#search').addEventListener('input',e=>{pop.q=cat.q=e.target.value;if(cat.q.trim())cat.cat=null;renderPop();renderCatalog()});
-$('#allRecipes').addEventListener('click',e=>{e.preventDefault();resetAll()});
+$('#search').addEventListener('input',e=>{cat.q=e.target.value;if(cat.q.trim())cat.cat=null;renderCatalog()});
+$('#allRecipes').addEventListener('click',e=>{e.preventDefault();$('#recipeCatalog').scrollIntoView({behavior:'smooth'})});
+$('#findFavorite').addEventListener('click',()=>$('#recipeCatalog').scrollIntoView({behavior:'smooth'}));
 ['#findBtn','#openAll'].forEach(s=>$(s).addEventListener('click',resetAll));
-$$('[data-nav="fav"]').forEach(a=>a.addEventListener('click',()=>{pop.favOnly=true;pop.cat=null;renderPop();setNav('fav')}));
+$$('[data-nav="fav"]').forEach(a=>a.addEventListener('click',()=>{renderPop();setNav('fav')}));
 $('[data-nav="recipes"]').addEventListener('click',resetAll);
 $('[data-nav="home"]').addEventListener('click',()=>setNav('home'));
 
 // ---------- Окно рецепта: ингредиенты и шаги берём из карточки каталога ----------
 const modal=$('#modal');
 const recipeLists=id=>{const r=$('#recipe-'+id);return{ing:r.querySelector('.ring').innerHTML,steps:r.querySelector('.rsteps').innerHTML}};
-function openPopular(card){
- const name=card.querySelector('h3').textContent,[time,serv]=[...card.querySelectorAll('.meta span')].map(s=>s.textContent),{ing,steps}=recipeLists(card.dataset.id);
- const ph=card.querySelector('img.ph');
- $('#modalBody').innerHTML=`${ph?`<img src="${ph.src}" alt="${esc(name)}">`:''}<div class="mb"><h2>${esc(name)}</h2><p class="tag">${esc(card.querySelector('.tag').textContent)}</p><p style="color:var(--mute);margin-top:8px">⏱ ${esc(time)} · ◔ ${esc(serv)}</p><h4>Ингредиенты</h4><ul>${ing}</ul><h4>Приготовление</h4><ol>${steps}</ol></div>`;
- modal.showModal();
-}
 function openDish(btn){
  const block=btn.closest('.cuisine'),card=btn.closest('.dcard'),{ing,steps}=recipeLists(btn.dataset.recipe),st=block.style;
  const [time,serv]=[...card.querySelectorAll('.dmeta>span')].map(s=>s.textContent);
@@ -157,6 +189,6 @@ $('#profile').addEventListener('click',()=>{
  else openAuth('reg')});
 
 // ---------- Запуск ----------
-renderPop();renderCatalog();
+updateFavoriteButtons();renderPop();renderCatalog();
 const startCuisine=new URLSearchParams(location.search).get('c');
 if(document.getElementById('cu-'+startCuisine))showCuisine(startCuisine);

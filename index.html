@@ -18,6 +18,7 @@
     <a href="#recipeCatalog" data-nav="recipes">Рецепты</a>
     <a href="#recipes" data-nav="fav">Избранное</a>
     <a href="#cuisines" data-nav="world">Кухни мира</a>
+    <a href="games.html">Еда из игр</a>
   </nav>
   <form class="search" id="searchForm" role="search">
     <input type="search" id="search" placeholder="Поиск рецептов…" aria-label="Поиск рецептов">
@@ -37,47 +38,27 @@
   <div class="leaf"><span>Вкус объединяет культуры</span><svg viewBox="0 0 24 24"><use href="#bud"/></svg></div>
 </section>
 
+<nav class="entry-links" aria-label="Выбрать коллекцию рецептов">
+  <a class="entry-card" href="#recipeCatalog">
+    <img src="assets/images/hero.webp" alt="">
+    <span class="entry-copy"><strong>Реальные вкусы</strong><small>Домашние рецепты со всего мира</small></span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+  </a>
+  <a class="entry-card" href="games.html">
+    <img src="assets/images/game-food/game-01.png" alt="">
+    <span class="entry-copy"><strong>Из экрана на тарелку</strong><small>Еда из игр — рецепты любимых блюд</small></span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+  </a>
+</nav>
+
 <section class="sec pop-sec" id="recipes">
-  <p class="kicker">Популярные рецепты</p><h2>Блюда, которые покоряют</h2>
+  <p class="kicker">Твоя кулинарная коллекция</p><h2>Мои любимые блюда</h2>
   <img class="fh2" src="assets/images/flowerhead2.webp" alt="">
-  <a href="#recipes" class="more" id="allRecipes">Смотреть все</a>
-  <div class="cards" id="cards" aria-live="polite">
-    <article class="card" data-id="1" data-cat="soup">
-      <img class="ph" src="https://commons.wikimedia.org/wiki/Special:FilePath/Soy_ramen.jpg?width=800" alt="Рамен с курицей" loading="lazy" referrerpolicy="no-referrer">
-      <button class="fav" aria-pressed="false" aria-label="В избранное: Рамен с курицей"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10Z"/></svg></button>
-      <h3>Рамен с курицей</h3>
-      <span class="tag">Азиатская кухня</span>
-      <div class="meta"><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>40 мин</span><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 12V4M12 12l5 5"/></svg>2 порции</span><button class="open" aria-label="Открыть рецепт: Рамен с курицей"><svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
-    </article>
-    <article class="card" data-id="2" data-cat="snack">
-      <img class="ph" src="https://commons.wikimedia.org/wiki/Special:FilePath/Pelmeni.jpg?width=800" alt="Пельмени" loading="lazy" referrerpolicy="no-referrer">
-      <button class="fav" aria-pressed="false" aria-label="В избранное: Пельмени"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10Z"/></svg></button>
-      <h3>Пельмени</h3>
-      <span class="tag">Русская кухня</span>
-      <div class="meta"><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>1 ч 20 мин</span><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 12V4M12 12l5 5"/></svg>4 порции</span><button class="open" aria-label="Открыть рецепт: Пельмени"><svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
-    </article>
-    <article class="card" data-id="3" data-cat="soup">
-      <img class="ph" src="https://commons.wikimedia.org/wiki/Special:FilePath/Borscht_served.jpg?width=800" alt="Борщ" loading="lazy" referrerpolicy="no-referrer">
-      <button class="fav" aria-pressed="false" aria-label="В избранное: Борщ"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10Z"/></svg></button>
-      <h3>Борщ</h3>
-      <span class="tag">Русская кухня</span>
-      <div class="meta"><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>1 ч 30 мин</span><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 12V4M12 12l5 5"/></svg>4 порции</span><button class="open" aria-label="Открыть рецепт: Борщ"><svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
-    </article>
-    <article class="card" data-id="4" data-cat="main">
-      <img class="ph" src="https://commons.wikimedia.org/wiki/Special:FilePath/Espaguetis%20carbonara.jpg?width=800" alt="Паста карбонара" loading="lazy" referrerpolicy="no-referrer">
-      <button class="fav" aria-pressed="false" aria-label="В избранное: Паста карбонара"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10Z"/></svg></button>
-      <h3>Паста карбонара</h3>
-      <span class="tag">Итальянская кухня</span>
-      <div class="meta"><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>35 мин</span><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 12V4M12 12l5 5"/></svg>2 порции</span><button class="open" aria-label="Открыть рецепт: Паста карбонара"><svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
-    </article>
-    <article class="card" data-id="5" data-cat="dessert">
-      <img class="ph" src="https://commons.wikimedia.org/wiki/Special:FilePath/Matcha%20tiramisu.jpg?width=800" alt="Матча тирамису" loading="lazy" referrerpolicy="no-referrer">
-      <button class="fav" aria-pressed="false" aria-label="В избранное: Матча тирамису"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.500-7 10-7 10Z"/></svg></button>
-      <h3>Матча тирамису</h3>
-      <span class="tag">Десерты</span>
-      <div class="meta"><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>45 мин</span><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 12V4M12 12l5 5"/></svg>6 порций</span><button class="open" aria-label="Открыть рецепт: Матча тирамису"><svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
-    </article>
-    <div class="empty" id="cardsEmpty" hidden><span id="cardsEmptyText"></span> <button id="reset">показать все рецепты</button></div>
+  <a href="#recipeCatalog" class="more" id="allRecipes">Добавить блюдо</a>
+  <div class="recipe-grid favorite-grid" id="cards" aria-live="polite"></div>
+  <div class="empty favorite-empty" id="cardsEmpty">
+    <p>Пока здесь нет блюд. Добавь любимый рецепт в каталоге — он появится на этой странице.</p>
+    <button type="button" id="findFavorite">Выбрать блюдо</button>
   </div>
 </section>
 
@@ -319,7 +300,7 @@
     </article>
     <article class="rcard" id="recipe-kirgiz-2" data-cat="soup">
       <div class="rimg">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/L%C7%ABgma%C3%B0r%20Gu%C3%B0r%C3%B8%C3%B0arson%20%28British%20Library%20Cotton%20MS%20Julius%20A%20VII%2C%20folio%2033v%29.jpg?width=800" alt="Лагман" loading="lazy" referrerpolicy="no-referrer">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Armenian_Harisa.JPG/330px-Armenian_Harisa.JPG" alt="Лагман с мясом и овощами" loading="lazy" referrerpolicy="no-referrer">
         <span class="tag">Кыргызская кухня</span>
       </div>
       <div class="rbody">
@@ -519,7 +500,7 @@
     </article>
     <article class="rcard" id="recipe-kirgiz-8" data-cat="soup">
       <div class="rimg">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mongolian%20dried%20yogurt.jpg?width=800" alt="Кескек" loading="lazy" referrerpolicy="no-referrer">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Lagman_avec_salade_et_chou_ferment%C3%A9%2C_restaurant_Boukhara%2C_Lyon_%282021%29.jpg/960px-Lagman_avec_salade_et_chou_ferment%C3%A9%2C_restaurant_Boukhara%2C_Lyon_%282021%29.jpg" alt="Кескек — пшеничная каша с мясом" loading="lazy" referrerpolicy="no-referrer">
         <span class="tag">Кыргызская кухня</span>
       </div>
       <div class="rbody">
@@ -1315,7 +1296,7 @@
     </article>
     <article class="rcard" id="recipe-chin-4" data-cat="soup">
       <div class="rimg">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shanghai%20hot%20pots-20150518-RM-102531.jpg?width=800" alt="Горячий котелок" loading="lazy" referrerpolicy="no-referrer">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Hot_Pot.jpg/330px-Hot_Pot.jpg" alt="Китайский горячий котелок с мясом и овощами" loading="lazy" referrerpolicy="no-referrer">
         <span class="tag">Китайская кухня</span>
       </div>
       <div class="rbody">
@@ -4063,7 +4044,7 @@
     </article>
     <article class="rcard" id="recipe-tur-14" data-cat="dessert">
       <div class="rimg">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Turkish%20Delight%20lokum.jpg?width=800" alt="Рахат-лукум" loading="lazy" referrerpolicy="no-referrer">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/TurkishDelightDisplay.jpg/330px-TurkishDelightDisplay.jpg" alt="Турецкий рахат-лукум" loading="lazy" referrerpolicy="no-referrer">
         <span class="tag">Турецкая кухня</span>
       </div>
       <div class="rbody">
@@ -4428,7 +4409,7 @@
     </article>
     <article class="rcard" id="recipe-ger-10" data-cat="main">
       <div class="rimg">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/From%20tough%20to%20tender%20%28IA%20fromtoughtotende1935unit%29.pdf?width=800" alt="Сауэрбратен" loading="lazy" referrerpolicy="no-referrer">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Heldrunger_Sauerbraten_2.JPG/330px-Heldrunger_Sauerbraten_2.JPG" alt="Сауэрбратен — тушёная говядина с соусом" loading="lazy" referrerpolicy="no-referrer">
         <span class="tag">Немецкая кухня</span>
       </div>
       <div class="rbody">
@@ -4627,7 +4608,7 @@
     </article>
     <article class="rcard" id="recipe-usa-1" data-cat="bake">
       <div class="rimg">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/New%20York%20hot%20dog%20stand%20%282024%29-L1005645.jpg?width=800" alt="Хот-дог по-нью-йоркски" loading="lazy" referrerpolicy="no-referrer">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Hot_dog_with_mustard.png/330px-Hot_dog_with_mustard.png" alt="Хот-дог с горчицей" loading="lazy" referrerpolicy="no-referrer">
         <span class="tag">Американская кухня</span>
       </div>
       <div class="rbody">
@@ -4955,7 +4936,7 @@
     </article>
     <article class="rcard" id="recipe-usa-11" data-cat="bake">
       <div class="rimg">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2014-08-29%2011%2034%2032%20The%20fire%20tower%20on%20top%20of%20Apple%20Pie%20Hill%20in%20Wharton%20State%20Forest%2C%20Tabernacle%20Township%2C%20New%20Jersey.JPG?width=800" alt="Яблочный пирог" loading="lazy" referrerpolicy="no-referrer">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Apple_pie.jpg?width=800" alt="Яблочный пирог" loading="lazy" referrerpolicy="no-referrer">
         <span class="tag">Американская кухня</span>
       </div>
       <div class="rbody">
@@ -5401,7 +5382,7 @@
     </article>
     <article class="rcard" id="recipe-thai-9" data-cat="dessert">
       <div class="rimg">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mango%20sticky%20rice%2C%20the%20classic%20thai%20dessert%20%284284632258%29.jpg?width=800" alt="Манго со сладким рисом" loading="lazy" referrerpolicy="no-referrer">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Mango_sticy_rice_%283859549574%29.jpg/330px-Mango_sticy_rice_%283859549574%29.jpg" alt="Манго со сладким клейким рисом" loading="lazy" referrerpolicy="no-referrer">
         <span class="tag">Тайская кухня</span>
       </div>
       <div class="rbody">
@@ -6226,7 +6207,7 @@
           </div>
         </article>
         <article class="dcard">
-          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/L%C7%ABgma%C3%B0r%20Gu%C3%B0r%C3%B8%C3%B0arson%20%28British%20Library%20Cotton%20MS%20Julius%20A%20VII%2C%20folio%2033v%29.jpg?width=800')"><span class="dimgshade"></span><span class="dflag">🇰🇬</span><span class="dnum">03</span></div>
+          <div class="dimg" style="background-image:url('https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Armenian_Harisa.JPG/330px-Armenian_Harisa.JPG')"><span class="dimgshade"></span><span class="dflag">🇰🇬</span><span class="dnum">03</span></div>
           <div class="dbody">
             <h3>Лагман</h3>
             <p>Тянутая лапша с мясом, овощами и ароматным соусом</p>
@@ -6274,7 +6255,7 @@
           </div>
         </article>
         <article class="dcard">
-          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Mongolian%20dried%20yogurt.jpg?width=800')"><span class="dimgshade"></span><span class="dflag">🇰🇬</span><span class="dnum">09</span></div>
+          <div class="dimg" style="background-image:url('https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Lagman_avec_salade_et_chou_ferment%C3%A9%2C_restaurant_Boukhara%2C_Lyon_%282021%29.jpg/960px-Lagman_avec_salade_et_chou_ferment%C3%A9%2C_restaurant_Boukhara%2C_Lyon_%282021%29.jpg')"><span class="dimgshade"></span><span class="dflag">🇰🇬</span><span class="dnum">09</span></div>
           <div class="dbody">
             <h3>Кескек</h3>
             <p>Пшеничная каша с мясом в бульоне</p>
@@ -6508,7 +6489,7 @@
           </div>
         </article>
         <article class="dcard">
-          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Shanghai%20hot%20pots-20150518-RM-102531.jpg?width=800')"><span class="dimgshade"></span><span class="dflag">🇨🇳</span><span class="dnum">05</span></div>
+          <div class="dimg" style="background-image:url('https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Hot_Pot.jpg/330px-Hot_Pot.jpg')"><span class="dimgshade"></span><span class="dflag">🇨🇳</span><span class="dnum">05</span></div>
           <div class="dbody">
             <h3>Горячий котелок</h3>
             <p>Хого: бульон, мясо и овощи прямо на столе</p>
@@ -7253,7 +7234,7 @@
           </div>
         </article>
         <article class="dcard">
-          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Turkish%20Delight%20lokum.jpg?width=800')"><span class="dimgshade"></span><span class="dflag">🇹🇷</span><span class="dnum">15</span></div>
+          <div class="dimg" style="background-image:url('https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/TurkishDelightDisplay.jpg/330px-TurkishDelightDisplay.jpg')"><span class="dimgshade"></span><span class="dflag">🇹🇷</span><span class="dnum">15</span></div>
           <div class="dbody">
             <h3>Рахат-лукум</h3>
             <p>Классический лукум с розовой водой</p>
@@ -7354,7 +7335,7 @@
           </div>
         </article>
         <article class="dcard">
-          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/From%20tough%20to%20tender%20%28IA%20fromtoughtotende1935unit%29.pdf?width=800')"><span class="dimgshade"></span><span class="dflag">🇩🇪</span><span class="dnum">11</span></div>
+          <div class="dimg" style="background-image:url('https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Heldrunger_Sauerbraten_2.JPG/330px-Heldrunger_Sauerbraten_2.JPG')"><span class="dimgshade"></span><span class="dflag">🇩🇪</span><span class="dnum">11</span></div>
           <div class="dbody">
             <h3>Сауэрбратен</h3>
             <p>Маринованная говядина в тёмном соусе</p>
@@ -7415,7 +7396,7 @@
           </div>
         </article>
         <article class="dcard">
-          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/New%20York%20hot%20dog%20stand%20%282024%29-L1005645.jpg?width=800')"><span class="dimgshade"></span><span class="dflag">🇺🇸</span><span class="dnum">02</span></div>
+          <div class="dimg" style="background-image:url('https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Hot_dog_with_mustard.png/330px-Hot_dog_with_mustard.png')"><span class="dimgshade"></span><span class="dflag">🇺🇸</span><span class="dnum">02</span></div>
           <div class="dbody">
             <h3>Хот-дог по-нью-йоркски</h3>
             <p>Булочка с сосиской, горчицей и кимчуком</p>
@@ -7495,7 +7476,7 @@
           </div>
         </article>
         <article class="dcard">
-          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/2014-08-29%2011%2034%2032%20The%20fire%20tower%20on%20top%20of%20Apple%20Pie%20Hill%20in%20Wharton%20State%20Forest%2C%20Tabernacle%20Township%2C%20New%20Jersey.JPG?width=800')"><span class="dimgshade"></span><span class="dflag">🇺🇸</span><span class="dnum">12</span></div>
+          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Apple_pie.jpg?width=800')"><span class="dimgshade"></span><span class="dflag">🇺🇸</span><span class="dnum">12</span></div>
           <div class="dbody">
             <h3>Яблочный пирог</h3>
             <p>Классический аппл-пай с корицей</p>
@@ -7612,7 +7593,7 @@
           </div>
         </article>
         <article class="dcard">
-          <div class="dimg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Mango%20sticky%20rice%2C%20the%20classic%20thai%20dessert%20%284284632258%29.jpg?width=800')"><span class="dimgshade"></span><span class="dflag">🇹🇭</span><span class="dnum">10</span></div>
+          <div class="dimg" style="background-image:url('https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Mango_sticy_rice_%283859549574%29.jpg/330px-Mango_sticy_rice_%283859549574%29.jpg')"><span class="dimgshade"></span><span class="dflag">🇹🇭</span><span class="dnum">10</span></div>
           <div class="dbody">
             <h3>Манго со сладким рисом</h3>
             <p>Десерт из манго с кокосовым рисом</p>
@@ -7823,7 +7804,7 @@
 <footer class="footer">
   <svg class="wave" viewBox="0 0 896 16" preserveAspectRatio="none"><path d="M0 16V8C60 0 110 6 170 6s100-5 190-1 140 6 220 3 140-6 210-3 80 0 106-2v13Z"/></svg>
   <div class="flogo"><span class="logo-t">Momo</span><svg class="bud" viewBox="0 0 24 24"><use href="#bud"/></svg><small>Вкус мира в каждом рецепте</small></div>
-  <nav class="fnav"><a href="#top">Главная</a><a href="#recipeCatalog">Рецепты</a><a href="#recipes" data-nav="fav">Избранное</a><a href="#cuisines">Кухни мира</a><a href="#why">О нас</a></nav>
+  <nav class="fnav"><a href="#top">Главная</a><a href="#recipeCatalog">Рецепты</a><a href="#recipes" data-nav="fav">Избранное</a><a href="#cuisines">Кухни мира</a><a href="games.html">Еда из игр</a><a href="#why">О нас</a></nav>
   <div class="social">
     <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.500"/><circle cx="16.800" cy="7.200" r=".4"/></svg></a>
     <a href="https://t.me" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21 4 3 11l5 2 2 6 3-4 5 4Z"/></svg></a>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Рецепты блюд из Genshin Impact и Honkai: Star Rail, которые можно приготовить дома.">
+<title>Еда из игр — Momo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page page-sub page-onepage" id="top">
+<header class="header">
+  <a class="logo" href="index.html#top" aria-label="Momo — на главную"><img src="assets/images/logo.webp" alt="Momo"><small>Рецепты со всего мира<br>в одном месте</small></a>
+  <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav class="nav" id="nav">
+    <a href="index.html#top">Главная</a>
+    <a href="index.html#recipeCatalog">Рецепты</a>
+    <a href="index.html#recipes">Избранное</a>
+    <a href="index.html#cuisines">Кухни мира</a>
+    <a href="games.html" class="active" aria-current="page">Еда из игр</a>
+  </nav>
+  <form class="search" id="searchForm" role="search">
+    <input type="search" id="search" placeholder="Поиск блюда…" aria-label="Поиск блюда">
+    <button aria-label="Искать"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.500 4.500"/></svg></button>
+  </form>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="kicker">Любимые рецепты из знакомых миров</p>
+    <h1>Еда из игр</h1>
+    <p class="lead">Готовь дома блюда из Genshin Impact и Honkai: Star Rail — с ингредиентами и понятными шагами.</p>
+    <a class="btn" href="#gameRecipes"><span>Выбрать рецепт</span><svg class="go" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+  </div>
+  <img class="hero-img" src="assets/images/hero.webp" alt="Вдохновение для приготовления новых блюд">
+</section>
+
+<section class="sec all-sec" id="gameRecipes">
+  <p class="kicker">Каталог</p>
+  <h1>Рецепты из игровых миров</h1>
+  <p class="lead-sub">Выбери игру или найди блюдо по названию. Нажми на ингредиенты или приготовление, чтобы открыть подробности.</p>
+  <div class="qnav" id="gameFilters" aria-label="Фильтр по игре">
+    <button class="qchip" type="button" data-game-filter="all" aria-pressed="true">Все блюда</button>
+    <button class="qchip" type="button" data-game-filter="genshin" aria-pressed="false">Genshin Impact</button>
+    <button class="qchip" type="button" data-game-filter="hsr" aria-pressed="false">Honkai: Star Rail</button>
+  </div>
+  <div class="recipe-grid" id="gameRecipeList" aria-live="polite"></div>
+  <p class="game-empty" id="gameEmpty" hidden>Ничего не найдено. Попробуй изменить поиск или выбрать другую игру.</p>
+</section>
+
+<footer class="footer">
+  <div class="flogo"><span class="logo-t">Momo</span><small>Вкус мира в каждом рецепте</small></div>
+  <nav class="fnav"><a href="index.html#top">Главная</a><a href="index.html#recipeCatalog">Рецепты</a><a href="index.html#cuisines">Кухни мира</a><a href="games.html" aria-current="page">Еда из игр</a></nav>
+  <p class="copy">© 2026 Momo. Все права защищены.</p>
+</footer>
+</div>
+<script src="js/game-food.js"></script>
+</body>
+</html>
