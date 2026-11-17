@@ -264,6 +264,9 @@ const recipes = [
   }
 ];
 
+window.gameFoodRecipes = recipes;
+
+if (document.querySelector('#gameRecipeList')) {
 const list = document.querySelector('#gameRecipeList');
 const favoriteList = document.querySelector('#gameFavoriteList');
 const search = document.querySelector('#search');
@@ -477,3 +480,19 @@ nav.addEventListener('click', event => {
 });
 
 renderRecipes();
+
+const recipeHash = decodeURIComponent(location.hash.slice(1));
+if (/^game-\d+$/.test(recipeHash)) {
+  const card = [...list.children].find(item => item.dataset.recipeId === recipeHash);
+  if (card) {
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      window.recipeViewer.open(card, {
+        kicker: card.querySelector('.tag')?.textContent || '',
+        isFavorite: favoriteIds.has(recipeHash),
+        onFavoriteToggle: () => toggleFavorite(card.querySelector('.favorite-toggle'))
+      });
+    }, 250);
+  }
+}
+}

@@ -217,3 +217,18 @@ $('#profile').addEventListener('click',()=>{
 updateFavoriteButtons();renderPop();renderCatalog();
 const startCuisine=new URLSearchParams(location.search).get('c');
 if(document.getElementById('cu-'+startCuisine))showCuisine(startCuisine);
+const recipeHash=decodeURIComponent(location.hash.slice(1));
+if(/^recipe-[\w-]+$/.test(recipeHash)){
+ const card=document.getElementById(recipeHash);
+ if(card?.closest('#recipeList')){
+  Object.assign(cat,{cat:null,q:'',expanded:true});
+  $('#search').value='';
+  renderCatalog();
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(()=>window.recipeViewer.open(card,{
+   kicker:card.querySelector('.tag')?.textContent||'',
+   isFavorite:pop.favs.has(card.id),
+   onFavoriteToggle:()=>toggleFavorite(card)
+  }),250);
+ }
+}

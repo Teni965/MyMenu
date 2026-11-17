@@ -2395,6 +2395,11 @@ dialog img {
     font-size: 17px;
   }
 }
+@media (min-width: 960px) {
+  .entry-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 
 /* Заглушка вместо фото, если подходящего снимка блюда пока нет */
 .dimg.nophoto {
@@ -2415,6 +2420,127 @@ dialog img {
   place-items: center;
   font-size: 56px;
   background: linear-gradient(135deg, var(--t), var(--b));
+}
+.randomizer-page {
+  width: min(1050px, 100%);
+  margin: 0 auto;
+  padding: clamp(42px, 8vw, 92px) 20px 70px;
+}
+.randomizer-intro {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.randomizer-intro h1 {
+  margin: 4px 0 10px;
+  color: var(--h1);
+  font: 600 clamp(38px, 6vw, 58px)/1 var(--serif);
+}
+.randomizer-intro > p:not(.kicker):not(.randomizer-status) {
+  max-width: 520px;
+  margin: 0 auto 24px;
+  color: var(--mute);
+  font-size: 16px;
+}
+.randomize-button {
+  margin: 0 auto;
+  border: 0;
+  font: 500 16px var(--sans);
+}
+.randomize-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+.randomize-button svg {
+  width: 20px;
+  height: 20px;
+}
+.randomizer-status {
+  min-height: 22px;
+  margin-top: 16px;
+  color: var(--mute);
+  font-size: 13px;
+}
+.random-result {
+  max-width: 780px;
+  margin: 34px auto 0;
+}
+.random-result-link {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.8fr) minmax(0, 1fr);
+  min-height: 260px;
+  overflow: hidden;
+  border: 1px solid #e7dcd3;
+  border-radius: 20px;
+  background: linear-gradient(120deg, #fffaf3, #f2e5d4);
+  box-shadow: 0 12px 32px rgba(80, 40, 50, 0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.random-result-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(80, 40, 50, 0.17);
+}
+.random-result-image {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+  background: #eadfd4;
+}
+.random-result-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(22px, 4vw, 36px);
+}
+.random-result-content .kicker {
+  margin-bottom: 5px;
+}
+.random-result-content strong {
+  color: var(--h1);
+  font: 600 clamp(28px, 4vw, 38px)/1.05 var(--serif);
+}
+.random-result-content > span:not(.kicker):not(.random-result-cta) {
+  margin-top: 12px;
+  color: var(--mute);
+  line-height: 1.5;
+}
+.random-result-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 20px;
+  color: var(--wine);
+  font-weight: 500;
+}
+@media (max-width: 640px) {
+  .randomizer-page {
+    padding: 38px 16px 52px;
+  }
+  .randomizer-intro h1 {
+    font-size: 40px;
+  }
+  .randomizer-intro > p:not(.kicker):not(.randomizer-status) {
+    font-size: 14px;
+  }
+  .randomize-button {
+    gap: 9px;
+    padding: 12px 17px;
+    font-size: 14px;
+  }
+  .random-result-link {
+    grid-template-columns: 1fr;
+  }
+  .random-result-image {
+    height: 220px;
+    min-height: 0;
+    max-height: 58vw;
+  }
+  .random-result-content {
+    min-height: 210px;
+    padding: 20px;
+  }
 }
 
 .momo-mascot {

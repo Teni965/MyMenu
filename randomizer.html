@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Случайный выбор рецепта из каталога Momo и еды из игр.">
+<title>Случайный рецепт — Momo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page page-sub page-onepage" id="top">
+<header class="header">
+  <a class="logo" href="index.html#top" aria-label="Momo — на главную"><img src="assets/images/logo.webp" alt="Momo"><small>Рецепты со всего мира<br>в одном месте</small></a>
+  <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav class="nav" id="nav">
+    <a href="index.html#top">Главная</a>
+    <a href="index.html#recipeCatalog">Рецепты</a>
+    <a href="index.html#recipes">Избранное</a>
+    <a href="games.html">Еда из игр</a>
+  </nav>
+</header>
+
+<main class="randomizer-page">
+  <section class="randomizer-intro">
+    <p class="kicker">Не знаешь, что приготовить?</p>
+    <h1>Доверься случаю</h1>
+    <p>Случайно выберу блюдо из обычных рецептов и еды из игровых миров.</p>
+    <button class="btn randomize-button" id="randomize" type="button" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3c4 0 6 10 10 10h3m-4-4 4 4-4 4M4 17h3c1.5 0 2.7-1.6 3.8-3.5M14 8c1-1 1.8-1 3-1h3m-4-4 4 4-4 4"/></svg>
+      <span>Загружаю рецепты…</span>
+    </button>
+    <p class="randomizer-status" id="randomizerStatus" role="status" aria-live="polite">Собираю блюда из каталога…</p>
+  </section>
+
+  <section class="random-result" id="randomResult" aria-live="polite" hidden>
+    <a class="random-result-link" id="randomResultLink">
+      <img class="random-result-image" id="randomResultImage" alt="">
+      <span class="random-result-content">
+        <span class="kicker" id="randomResultCategory"></span>
+        <strong id="randomResultTitle"></strong>
+        <span id="randomResultDescription"></span>
+        <span class="random-result-cta">Открыть рецепт <span aria-hidden="true">→</span></span>
+      </span>
+    </a>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="flogo"><span class="logo-t">Momo</span><small>Вкус мира в каждом рецепте</small></div>
+  <nav class="fnav"><a href="index.html#top">Главная</a><a href="index.html#recipeCatalog">Рецепты</a><a href="games.html">Еда из игр</a></nav>
+  <p class="copy">© 2026 Momo. Все права защищены.</p>
+</footer>
+</div>
+<script src="js/game-food.js"></script>
+<script src="js/randomizer.js"></script>
+</body>
+</html>
